@@ -46,8 +46,6 @@ RUN apk -U upgrade \
 COPY --from=ghcr.io/blue-oci/hardened_malloc:latest /extract /usr/local/lib/
 ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 
-RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" synapse
-
 RUN pip install --upgrade pip \
     && pip install -e "git+https://github.com/matrix-org/mjolnir.git#egg=mjolnir&subdirectory=synapse_antispam"
 
@@ -55,6 +53,7 @@ COPY --from=synapse-builder /install /usr/local
 COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/start.py /start.py
 COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/conf /conf
 
+RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" synapse
 USER synapse
 
 VOLUME /data
