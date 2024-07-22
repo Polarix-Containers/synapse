@@ -9,4 +9,4 @@
 - [Mjolnir module](https://github.com/matrix-org/mjolnir/blob/main/docs/synapse_module.md) support is included.
 
 ### Licensing
-- Licensed under AGPL 3 🤮 to comply with licensing changes by Element.
+- Licensed under AGPL 3 to comply with licensing changes by Element.
