@@ -19,10 +19,11 @@ env:
 jobs:
   build:
     name: Build & push new image
-    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
+    timeout-minutes: 10
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -66,6 +67,7 @@ jobs:
     needs: build
     permissions:
       security-events: write
+    timeout-minutes: 10
     runs-on: ubuntu-24.04
     steps:
       - name: Run Trivy vulnerability scanner
@@ -89,6 +91,7 @@ jobs:
     needs: build
     permissions:
       security-events: write
+    timeout-minutes: 10
     runs-on: ubuntu-24.04
     steps:
       - name: Run Grype vulnerability scanner
