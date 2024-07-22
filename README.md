@@ -10,3 +10,4 @@
 
 ### Licensing
 - Licensed under AGPL 3 to comply with licensing changes by Element.
+- Any image built by Blue OCI is provided under the combination of license terms resulting from the use of individual packages.
