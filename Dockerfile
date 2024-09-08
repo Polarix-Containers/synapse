@@ -27,8 +27,11 @@ FROM alpine:latest AS rootfs
 ARG VERSION
 
 RUN apk -U upgrade \
-    && apk --no-cache add git \
+    && apk --no-cache add git libstdc++ \
     && rm -rf /var/cache/apk/*
+
+COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
+ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 
 RUN cd /tmp \
     && git clone --depth 1 --branch v${VERSION} https://github.com/element-hq/synapse
