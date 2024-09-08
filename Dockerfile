@@ -22,9 +22,13 @@ RUN rustup-init -y && source $HOME/.cargo/env \
 
 
 ### Get RootFS Files
-FROM ghcr.io/polarix-containers/alpine-builder:latest AS rootfs
+FROM alpine:latest AS rootfs
 
 ARG VERSION
+
+RUN apk -U upgrade \
+    && apk --no-cache add git \
+    && rm -rf /var/cache/apk/*
 
 RUN cd /tmp \
     && git clone --depth 1 --branch v${VERSION} https://github.com/element-hq/synapse
