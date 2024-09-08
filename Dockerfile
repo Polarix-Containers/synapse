@@ -60,7 +60,7 @@ COPY --from=synapse-builder /install /usr/local
 COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/start.py /start.py
 COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/conf /conf
 
-RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" synapse
+RUN adduser -g ${GID} -u ${UID} --disabled-password --system --gecos "" synapse
 USER synapse
 
 VOLUME /data
