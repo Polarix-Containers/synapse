@@ -59,7 +59,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: rc
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -98,14 +98,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            mjolnir
-            ${{ env.FULL_VERSION }}-mjolnir
+            mjolnir-rc
+            ${{ env.FULL_VERSION }}-mjolnir-rc
 
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: mjolnir
+          context: mjolnir-rc
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
