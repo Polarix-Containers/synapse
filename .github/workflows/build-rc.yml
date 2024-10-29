@@ -79,7 +79,7 @@ jobs:
 
       - name: Extract version for tags
         run: |
-          echo "FULL_VERSION=$(grep -oP '(?<=VERSION=).*' Dockerfile)" >> $GITHUB_ENV
+          echo "FULL_VERSION=$(grep -oP '(?<=VERSION=).*' rc/Dockerfile)" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
