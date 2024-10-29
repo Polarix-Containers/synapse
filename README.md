@@ -1,6 +1,7 @@
 # Synapse
 
-![Build, scan & push](https://github.com/Polarix-Containers/synapse/actions/workflows/build.yml/badge.svg)
+![Build, scan & push](https://github.com/Polarix-Containers/synapse/actions/workflows/build-latest.yml/badge.svg)
+![Build, scan & push](https://github.com/Polarix-Containers/synapse/actions/workflows/build-rc.yml/badge.svg)
 
 ### Features & usage
 - Drop-in replacement for the [official image](https://github.com/element-hq/synapse/tree/develop/docker).

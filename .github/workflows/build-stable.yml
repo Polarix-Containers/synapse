@@ -1,13 +1,14 @@
-name: Build
+name: Build latest
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-    # Ignore Markdown files
-    paths-ignore:
-      - '**.md'
+    paths:
+      - '.github/workflows/build-latest.yml'
+      - 'latest/**'
+      - 'mjolnir/**'
   schedule:
     # Build the image daily
     - cron: '15 0 * * *'
