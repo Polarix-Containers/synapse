@@ -53,11 +53,13 @@ RUN apk -U upgrade \
 COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
 ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 
+RUN addgroup -g ${GID} synapse \
+    && adduser -u ${UID} --ingroup synapse --disabled-password --system synapse
+
 COPY --from=synapse-builder /install /usr/local
 COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/start.py /start.py
 COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/conf /conf
 
-RUN adduser -u ${UID} -g ${GID} --disabled-password --system synapse
 USER synapse
 
 VOLUME /data
