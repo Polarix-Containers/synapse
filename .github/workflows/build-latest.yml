@@ -143,7 +143,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Run Grype vulnerability scanner
-        uses: anchore/scan-action@v5
+        uses: anchore/scan-action@v6
         id: grype
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mjolnir
