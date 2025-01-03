@@ -43,7 +43,7 @@ RUN --network=none \
     && adduser -u ${UID} --ingroup synapse --disabled-password --system synapse
 
 COPY --from=synapse-builder /install /usr/local
-ADD --chown=synapse:synapse https://raw.githubusercontent.com/element-hq/synapse/refs/tags/${VERSION}/docker/start.py /start.py
+ADD --chown=synapse:synapse https://raw.githubusercontent.com/element-hq/synapse/refs/tags/v${VERSION}/docker/start.py /start.py
 ADD --chown=synapse:synapse https://github.com/element-hq/synapse.git#v${VERSION}:docker/conf /conf
 
 USER synapse
