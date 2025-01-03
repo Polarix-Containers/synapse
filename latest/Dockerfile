@@ -19,7 +19,7 @@ RUN rustup-init -y && source $HOME/.cargo/env \
     && pip install --upgrade pip \
     && pip install --prefix="/install" --no-warn-script-location \
     matrix-synapse[all]==${VERSION}
-    
+
 
 ### Build Production
 
@@ -27,6 +27,7 @@ FROM python:${PYTHON}-alpine
 
 LABEL maintainer="Thien Tran contact@tommytran.io"
 
+ARG VERSION
 ARG UID
 ARG GID
 
