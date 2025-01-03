@@ -19,16 +19,7 @@ RUN rustup-init -y && source $HOME/.cargo/env \
     && pip install --upgrade pip \
     && pip install --prefix="/install" --no-warn-script-location \
     matrix-synapse[all]==${VERSION}
-
-
-### Get RootFS Files
-FROM alpine:latest AS rootfs
-
-ARG VERSION
-
-WORKDIR /root/synapse
-ADD https://github.com/element-hq/synapse.git#v${VERSION} .
-
+    
 
 ### Build Production
 
@@ -51,8 +42,8 @@ RUN --network=none \
     && adduser -u ${UID} --ingroup synapse --disabled-password --system synapse
 
 COPY --from=synapse-builder /install /usr/local
-COPY --from=rootfs --chown=synapse:synapse /root/synapse/docker/start.py /start.py
-COPY --from=rootfs --chown=synapse:synapse /root/synapse/docker/conf /conf
+ADD --chown=synapse:synapse https://github.com/element-hq/synapse.git#v${VERSION}:docker/start.py /start.py
+ADD --chown=synapse:synapse https://github.com/element-hq/synapse.git#v${VERSION}:docker/conf /conf
 
 USER synapse
 
