@@ -26,15 +26,8 @@ FROM alpine:latest AS rootfs
 
 ARG VERSION
 
-RUN apk -U upgrade \
-    && apk --no-cache add git libstdc++ \
-    && rm -rf /var/cache/apk/*
-
-COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
-ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
-
-RUN cd /tmp \
-    && git clone --depth 1 --branch v${VERSION} https://github.com/element-hq/synapse
+WORKDIR /root/synapse
+ADD https://github.com/element-hq/synapse.git#v${VERSION} .
 
 
 ### Build Production
@@ -53,12 +46,13 @@ RUN apk -U upgrade \
 COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
 ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 
-RUN addgroup -g ${GID} synapse \
+RUN --network=none \
+    addgroup -g ${GID} synapse \
     && adduser -u ${UID} --ingroup synapse --disabled-password --system synapse
 
 COPY --from=synapse-builder /install /usr/local
-COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/start.py /start.py
-COPY --from=rootfs --chown=synapse:synapse /tmp/synapse/docker/conf /conf
+COPY --from=rootfs --chown=synapse:synapse /root/synapse/docker/start.py /start.py
+COPY --from=rootfs --chown=synapse:synapse /root/synapse/docker/conf /conf
 
 USER synapse
 
