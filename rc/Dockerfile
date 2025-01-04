@@ -5,7 +5,7 @@ ARG GID=3000
 
 
 ### Build Synapse
-FROM python:${PYTHON}-alpine AS synapse-builder
+FROM python:${PYTHON}-alpine AS builder
 
 ARG VERSION
 
@@ -42,7 +42,7 @@ RUN --network=none \
     addgroup -g ${GID} synapse \
     && adduser -u ${UID} --ingroup synapse --disabled-password --system synapse
 
-COPY --from=synapse-builder /install /usr/local
+COPY --from=builder /install /usr/local
 ADD --chown=synapse:synapse https://raw.githubusercontent.com/element-hq/synapse/refs/tags/v${VERSION}/docker/start.py /start.py
 ADD --chown=synapse:synapse https://github.com/element-hq/synapse.git#v${VERSION}:docker/conf /conf
 
