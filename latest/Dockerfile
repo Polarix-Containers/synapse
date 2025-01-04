@@ -3,8 +3,6 @@ ARG PYTHON=3.13
 ARG UID=3000
 ARG GID=3000
 
-
-### Build Synapse
 FROM python:${PYTHON}-alpine AS builder
 
 ARG VERSION
@@ -20,8 +18,7 @@ RUN rustup-init -y && source $HOME/.cargo/env \
     && pip install --prefix="/install" --no-warn-script-location \
     matrix-synapse[all]==${VERSION}
 
-
-### Build Production
+# ======================================= #
 
 FROM python:${PYTHON}-alpine
 
