@@ -6,7 +6,7 @@
 ### Features & usage
 - Drop-in replacement for the [official image](https://github.com/element-hq/synapse/tree/develop/docker).
 - Based on the latest [Alpine](https://alpinelinux.org/) containers which provide more recent packages while having less attack surface.
-- Unprivileged image: you should check your volumes' permissions (eg `/data`), default UID/GID is 700002.
+- Unprivileged image: you should check your volumes' permissions (eg `/data`), default UID/GID is 200002.
 - [Mjolnir module](https://github.com/matrix-org/mjolnir/blob/main/docs/synapse_module.md) included in `mjolnir` images.
 
 ### Licensing
