@@ -9,6 +9,7 @@ on:
       - '.github/workflows/build-latest.yml'
       - 'latest/**'
       - 'mjolnir/**'
+      - 'antispam/**'
   schedule:
     # Build the image daily
     - cron: '15 0 * * *'
@@ -110,9 +111,55 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  build-antispam:
+    name: Build & push antispam image
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    timeout-minutes: 10
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Extract version for tags
+        run: |
+          echo "FULL_VERSION=$(grep -oP '(?<=VERSION=).*' latest/Dockerfile)" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            antispam
+            ${{ env.FULL_VERSION }}-antispam
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: antispam
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
   trivy:
     name: Scan current image with Trivy
-    needs: build-mjolnir
+    needs: build-antispam
     permissions:
       security-events: write
     timeout-minutes: 10
@@ -121,7 +168,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mjolnir
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:antispam
           format: template
           template: '@/contrib/sarif.tpl'
           output: trivy-results.sarif
@@ -136,7 +183,7 @@ jobs:
 
   grype:
     name: Scan current image with Grype
-    needs: build-mjolnir
+    needs: build-antispam
     permissions:
       security-events: write
     timeout-minutes: 10
@@ -146,7 +193,7 @@ jobs:
         uses: anchore/scan-action@v7
         id: grype
         with:
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:mjolnir
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:antispam
           fail-build: false
 
       - name: Upload Grype scan results to GitHub Security tab
