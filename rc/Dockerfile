@@ -29,7 +29,7 @@ ARG UID
 ARG GID
 
 RUN apk -U upgrade \
-    && apk --no-cache add curl git icu-libs libffi libjpeg-turbo libpq libstdc++ libxslt openssl tzdata xmlsec zlib \
+    && apk add curl git icu-libs libffi libjpeg-turbo libpq libstdc++ libxslt openssl tzdata xmlsec zlib \
     && rm -rf /var/cache/apk/*
 
 COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/

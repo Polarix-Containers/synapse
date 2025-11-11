@@ -8,7 +8,7 @@ FROM python:${PYTHON}-alpine AS builder
 ARG VERSION
 
 RUN apk -U upgrade \
-    && apk add -u build-base libffi-dev libjpeg-turbo-dev libstdc++ libxslt-dev linux-headers openssl-dev postgresql-dev rustup zlib-dev
+    && apk add build-base libffi-dev libjpeg-turbo-dev libstdc++ libxslt-dev linux-headers openssl-dev postgresql-dev rustup zlib-dev
 
 COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
 ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
@@ -29,7 +29,7 @@ ARG UID
 ARG GID
 
 RUN apk -U upgrade \
-    && apk --no-cache add curl git icu-libs libffi libjpeg-turbo libpq libstdc++ libxslt openssl tzdata xmlsec zlib \
+    && apk add curl git icu-libs libffi libjpeg-turbo libpq libstdc++ libxslt openssl tzdata xmlsec zlib \
     && rm -rf /var/cache/apk/*
 
 COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
