@@ -206,7 +206,7 @@ jobs:
 
   trivy:
     name: Scan current image with Trivy
-    needs: build-antispam
+    needs: build-antispam-jemalloc
     permissions:
       security-events: write
     timeout-minutes: 10
@@ -230,7 +230,7 @@ jobs:
 
   grype:
     name: Scan current image with Grype
-    needs: build-antispam
+    needs: build-antispam-jemalloc
     permissions:
       security-events: write
     timeout-minutes: 10
