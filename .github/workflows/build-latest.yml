@@ -159,7 +159,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   build-antispam-jemalloc:
-    name: Build & push antispam image
+    name: Build & push antispam-jemalloc image
     needs: build-antispam
     permissions:
       contents: read
