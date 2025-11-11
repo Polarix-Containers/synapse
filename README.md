@@ -7,6 +7,7 @@
 - Drop-in replacement for the [official image](https://github.com/element-hq/synapse/tree/develop/docker).
 - Unprivileged image: you should check your volumes' permissions (eg `/data`), default UID/GID is 200002.
 - [Mjolnir module](https://github.com/matrix-org/mjolnir/blob/main/docs/synapse_module.md) included in `mjolnir` images.
+- [synapse-http-antispam module](https://github.com/maunium/synapse-http-antispam) included in `antispam` images.
 
 ### Licensing
 - Licensed under AGPL 3 to comply with licensing changes by Element.
