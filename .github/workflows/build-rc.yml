@@ -59,7 +59,7 @@ jobs:
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: rc
           push: ${{ github.event_name != 'pull_request' }}
@@ -105,7 +105,7 @@ jobs:
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: mjolnir-rc
           push: ${{ github.event_name != 'pull_request' }}
@@ -151,7 +151,7 @@ jobs:
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: antispam-rc
           push: ${{ github.event_name != 'pull_request' }}
@@ -197,7 +197,7 @@ jobs:
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: antispam-jemalloc-rc
           push: ${{ github.event_name != 'pull_request' }}
