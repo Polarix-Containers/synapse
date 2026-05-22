@@ -16,7 +16,7 @@ ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 RUN rustup-init -y && source $HOME/.cargo/env \
     && pip install --upgrade pip \
     && pip install --prefix="/install" --no-warn-script-location \
-    matrix-synapse[all]==${VERSION}
+    matrix-synapse==${VERSION} matrix-synapse[cache-memory]==${VERSION} matrix-synapse[jwt]==${VERSION} matrix-synapse[matrix-synapse-ldap3]==${VERSION} matrix-synapse[oidc]==${VERSION} matrix-synapse[opentracing]==${VERSION} matrix-synapse[postgres]==${VERSION} matrix-synapse[redis]==${VERSION} matrix-synapse[sentry]==${VERSION} matrix-synapse[url-preview]==${VERSION}
 
 # ======================================= #
 
