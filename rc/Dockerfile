@@ -10,7 +10,7 @@ ARG VERSION
 RUN apk -U upgrade \
     && apk add build-base libffi-dev libjpeg-turbo-dev libstdc++ libxslt-dev linux-headers openssl-dev postgresql-dev rustup zlib-dev
 
-COPY --from=ghcr.io/polarix-containers/hardened_malloc:latest /install /usr/local/lib/
+COPY --from=ghcr.io/polarix-containers/hardened_malloc:2026081300 /install /usr/local/lib/
 ENV LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
     
 RUN rustup-init -y && source $HOME/.cargo/env \
